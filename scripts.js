@@ -1367,7 +1367,7 @@ if (typeof window !== 'undefined') {
         
         // Development helpers
         dev: {
-            simulateDetection: (letter, confidence = 0.9) => {
+            simulateDetection: (letter, confidence = 0.85) => {
                 handleGameDetection({ letter: letter.toUpperCase(), confidence });
             },
             skipToResults: () => {
