@@ -2,7 +2,7 @@
 // ====== GLOBAL VARIABLES & CONFIGURATION ======
 // Game configuration constants
 const CONFIG = {
-    API_URL: 'https://jo2254-gabut.hf.space/', // Flask backend endpoint
+    API_URL: 'API_URL: 'https://jo2254-gabut.hf.space/predict', // Flask backend endpoint
     CONFIDENCE_THRESHOLD: 0.85, // Minimum confidence untuk detection
     DETECTION_INTERVAL: 1000, // Interval detection dalam ms (1 detik)
     SINGLE_GAME_TIME: 60, // Waktu single player dalam detik
@@ -1202,7 +1202,7 @@ window.addEventListener('unhandledrejection', function(e) {
 
 async function testAPIConnection() {
     try {
-        const response = await fetch('https://jo2254-gabut.hf.space/', {
+        const response = await fetch('API_URL: 'https://jo2254-gabut.hf.space/predict'', {
             method: 'GET'
         });
         
@@ -1389,4 +1389,5 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
