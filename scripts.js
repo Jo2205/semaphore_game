@@ -337,9 +337,6 @@ async function detectSemaphore() {
         canvas.width = videoElement.videoWidth || 640;
         canvas.height = videoElement.videoHeight || 480;
 
-        console.log("📸 Canvas size:", canvas.width, canvas.height);
-
-        console.log("📸 Image base64 sample:", imageData.slice(0, 100));
 
         ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
