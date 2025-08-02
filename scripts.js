@@ -333,12 +333,12 @@ async function detectSemaphore() {
         // Capture frame dari video
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        
-        canvas.width = videoElement.videoWidth;
-        canvas.height = videoElement.videoHeight;
-        
-        // Draw video frame ke canvas
-        ctx.drawImage(videoElement, 0, 0);
+
+        canvas.width = videoElement.videoWidth || 640;
+        canvas.height = videoElement.videoHeight || 480;
+
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
         
         // Convert ke base64
         const imageData = canvas.toDataURL('image/jpeg', 0.8);
@@ -1389,5 +1389,6 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
