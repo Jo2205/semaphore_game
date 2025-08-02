@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Semaphore</title>
+    
+    <!-- Google Fonts untuk Gaming Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome untuk Icons (opsional, bisa diganti dengan emoji) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Link ke file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ====== LOADING SCREEN ====== -->
+    <!-- Loading screen yang muncul pertama kali saat website dibuka -->
+    <div id="loading-screen" class="loading-screen active">
+        <div class="loading-content">
+            <!-- GANTI logo.png dengan file logo Anda -->
+            <img src="logo.png" alt="Game Logo" class="loading-logo" onerror="this.src='https://via.placeholder.com/120?text=Logo'">
+            <h1 class="loading-title">SEMAPHORE GAME</h1>
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <p class="loading-text">Loading Game...</p>
+        </div>
+    </div>
+
+    <!-- ====== BACKGROUND MUSIC CONTROL ====== -->
+    <!-- Audio element untuk background music - GANTI music.mp3 dengan file musik Anda -->
+    <audio id="background-music" loop>
+        <source src="sound/pp.mp3" type="audio/mpeg">
+        <source src="music.ogg" type="audio/ogg">
+        <source src="https://www.example.com/fallback-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Tombol control musik di pojok kanan atas -->
+    <div class="music-control">
+        <button id="music-toggle" class="music-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <!-- ====== MAIN GAME CONTAINER ====== -->
+    <!-- Container utama untuk semua halaman dengan background overlay -->
+    <div class="game-container">
+        
+        <!-- ====== HALAMAN UTAMA / HOME ====== -->
+        <div id="home-page" class="page active">
+            <div class="page-content">
+                <!-- Header utama dengan animasi -->
+                <div class="main-header">
+                    <h1 class="game-title">
+                        <span class="title-word">SULADES</span>
+                        <span class="title-word">GAME</span>
+                    </h1>
+                    <p class="game-subtitle">Master the Art of Flag Signaling</p>
+                </div>
+                
+                <!-- Menu utama dengan 4 pilihan -->
+                <div class="main-menu">
+                    <!-- Tombol untuk masuk ke mode latihan -->
+                    <button class="menu-btn practice-btn" onclick="showPage('practice-page')">
+                        <div class="btn-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="btn-content">
+                            <h3>PRACTICE MODE</h3>
+                            <p>Learn semaphore signals</p>
+                        </div>
+                    </button>
+                    
+                    <!-- Tombol untuk masuk ke mode game -->
+                    <button class="menu-btn singleplayer-btn" onclick="showPage('game-page')">
+                        <div class="btn-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="btn-content">
+                            <h3>SINGLE PLAYER</h3>
+                            <p>Test your skills</p>
+                        </div>
+                    </button>
+                    
+                    <!-- Tombol untuk setup multiplayer -->
+                    <button class="menu-btn multiplayer-btn" onclick="showPage('multiplayer-setup-page')">
+                        <div class="btn-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="btn-content">
+                            <h3>MULTIPLAYER</h3>
+                            <p>Challenge your friends</p>
+                        </div>
+                    </button>
+                    
+                    <!-- Tombol untuk melihat history -->
+                    <button class="menu-btn history-btn" onclick="showPage('history-page')">
+                        <div class="btn-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="btn-content">
+                            <h3>LEADERBOARD</h3>
+                            <p>View your achievements</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== HALAMAN MODE LATIHAN ====== -->
+        <div id="practice-page" class="page">
+            <div class="page-content">
+                <!-- Header halaman -->
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        PRACTICE MODE
+                    </h2>
+                    <button class="back-btn" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Menu
+                    </button>
+                </div>
+                
+                <!-- Area kamera untuk deteksi gesture - UKURAN DIPERBESAR -->
+                <div class="camera-section practice-camera">
+                    <div class="camera-container">
+                        <!-- Camera placeholder -->
+                        <div class="camera-placeholder">
+                            <div class="camera-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h3>Camera Required</h3>
+                            <p>Enable camera to detect your semaphore gestures</p>
+                            <button class="enable-camera-btn" onclick="enableCamera('practice')">
+                                <i class="fas fa-video"></i>
+                                Enable Camera
+                            </button>
+                        </div>
+                        <!-- Video element untuk menampilkan feed kamera -->
+                        <video id="practice-video" class="camera-video" autoplay muted style="display: none;"></video>
+                        
+                        <!-- Camera status indicator -->
+                        <div class="camera-status">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Camera Ready</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel informasi huruf yang sedang dipraktikkan -->
+                <div class="practice-info">
+                    <div class="current-letter">
+                        <h3>Current Letter</h3>
+                        <div class="letter-display">
+                            <span id="practice-letter" class="letter-big">A</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Instruksi gesture -->
+                    <div class="gesture-instruction">
+                        <h4>Gesture Instructions:</h4>
+                        <p id="practice-instruction">Right hand up, left hand to the side</p>
+                    </div>
+                </div>
+                
+                <!-- Tombol-tombol kontrol -->
+                <div class="control-panel">
+                    <button class="control-btn change-btn" onclick="changeLetter()">
+                        <i class="fas fa-random"></i>
+                        New Letter
+                    </button>
+                    
+                    <button class="control-btn guide-btn" onclick="showInstructions()">
+                        <i class="fas fa-question-circle"></i>
+                        Show Guide
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== HALAMAN MODE GAME ====== -->
+        <div id="game-page" class="page">
+            <div class="page-content">
+                <!-- Header halaman -->
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-gamepad"></i>
+                        SINGLE PLAYER
+                    </h2>
+                    <button class="back-btn" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Menu
+                    </button>
+                </div>
+                
+                <!-- Area kamera - UKURAN DIPERBESAR -->
+                <div class="camera-section game-camera">
+                    <div class="camera-container">
+                        <div class="camera-placeholder">
+                            <div class="camera-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h3>Camera Required</h3>
+                            <p>Enable camera to start the game</p>
+                            <button class="enable-camera-btn" onclick="enableCamera('game')">
+                                <i class="fas fa-video"></i>
+                                Enable Camera
+                            </button>
+                        </div>
+                        <video id="game-video" class="camera-video" autoplay muted style="display: none;"></video>
+                        
+                        <!-- Game overlay pada kamera -->
+                        <div class="game-overlay">
+                            <div class="target-letter-overlay">
+                                <span id="game-target-overlay">A</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel informasi game (skor, waktu, target) -->
+                <div class="game-dashboard">
+                    <div class="dashboard-item score-item">
+                        <div class="dashboard-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="dashboard-content">
+                            <span class="dashboard-value" id="game-score">0</span>
+                            <span class="dashboard-label">SCORE</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item timer-item">
+                        <div class="dashboard-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="dashboard-content">
+                            <span class="dashboard-value timer-value" id="game-timer">60</span>
+                            <span class="dashboard-label">SECONDS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item target-item">
+                        <div class="dashboard-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="dashboard-content">
+                            <span class="dashboard-value target-value" id="game-target">A</span>
+                            <span class="dashboard-label">TARGET</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instruksi huruf yang harus ditunjukkan -->
+                <div class="target-instruction-panel">
+                    <h3>Show This Letter:</h3>
+                    <div class="target-display">
+                        <span class="target-letter" id="target-display">A</span>
+                        <p class="instruction-text" id="target-instruction">Right hand up, left hand to the side</p>
+                    </div>
+                </div>
+                
+                <!-- Tombol kontrol game -->
+                <div class="game-controls">
+                    <button class="game-btn start-btn" onclick="startSinglePlayerGame()">
+                        Start Game
+                    </button>
+                    <button class="game-btn stop-btn" onclick="stopGame()">
+                        Stop Game
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== HALAMAN SETUP MULTIPLAYER ====== -->
+        <div id="multiplayer-setup-page" class="page">
+            <div class="page-content">
+                <!-- Header halaman -->
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-users"></i>
+                        MULTIPLAYER SETUP
+                    </h2>
+                    <button class="back-btn" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Menu
+                    </button>
+                </div>
+                
+                <!-- Input untuk menambah nama pemain -->
+                <div class="player-input-section">
+                    <h3>Add Players</h3>
+                    <div class="input-group">
+                        <input type="text" id="player-name-input" placeholder="Enter player name..." maxlength="20" class="player-input">
+                        <button class="add-player-btn" onclick="addPlayer()">
+                            <i class="fas fa-plus"></i>
+                            Add Player
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Daftar pemain yang sudah ditambahkan -->
+                <div class="players-section">
+                    <div class="section-header">
+                        <h3>Players List</h3>
+                        <span class="player-counter">(<span id="player-count">0</span> players)</span>
+                    </div>
+                    
+                    <div id="players-list" class="players-grid">
+                        <!-- Player akan ditambahkan secara dinamis -->
+                    </div>
+                </div>
+                
+                <!-- Tombol start game -->
+                <div class="multiplayer-controls">
+                    <button class="start-multiplayer-btn" id="start-multiplayer-btn" onclick="startMultiplayer()" disabled>
+                        <i class="fas fa-play"></i>
+                        <span>Start Game (0 Players)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+<!-- ====== HALAMAN GAME MULTIPLAYER ====== -->
+<div id="multiplayer-game-page" class="page">
+    <div class="page-content">
+        <!-- Header dengan current player -->
+        <div class="multiplayer-header">
+            <h2 class="page-title">MULTIPLAYER GAME</h2>
+            <div class="current-turn">
+                <span class="turn-label">Current Turn:</span>
+                <span class="current-player" id="current-player">Player 1</span>
+            </div>
+        </div>
+
+        <!-- Camera Section -->
+        <div class="camera-section">
+            <div class="camera-container">
+                <div class="camera-placeholder">
+                    <div class="camera-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Camera Required</h3>
+                    <p>Enable camera to start multiplayer game</p>
+                    <button class="enable-camera-btn" onclick="enableCamera('multiplayer')">Enable Camera</button>
+                </div>
+                <video id="multiplayer-video" class="camera-video" autoplay playsinline style="display: none;"></video>
+                <div class="camera-status">
+                    <span class="status-dot"></span>
+                    <span>Camera Ready</span>
+                </div>
+                <div class="game-overlay">
+                    <div class="target-letter-overlay">
+                        <span id="mp-target-overlay"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Dashboard - DIPERBAIKI DENGAN ID YANG BENAR -->
+        <div class="game-dashboard">
+            <div class="dashboard-item score-item">
+                <div class="dashboard-icon"><i class="fas fa-trophy"></i></div>
+                <div class="dashboard-content">
+                    <span class="dashboard-value" id="mp-score">0</span>
+                    <span class="dashboard-label">SCORE</span>
+                </div>
+            </div>
+            <div class="dashboard-item timer-item">
+                <div class="dashboard-icon"><i class="fas fa-clock"></i></div>
+                <div class="dashboard-content">
+                    <span class="dashboard-value timer-value" id="mp-timer">60</span>
+                    <span class="dashboard-label">SECONDS</span>
+                </div>
+            </div>
+            <div class="dashboard-item target-item">
+                <div class="dashboard-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="dashboard-content">
+                    <span class="dashboard-value target-value" id="mp-target">A</span>
+                    <span class="dashboard-label">TARGET</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Target Instruction Panel - DIPERBAIKI DENGAN ID YANG BENAR -->
+        <div class="target-instruction-panel">
+            <h3>Show This Letter:</h3>
+            <div class="target-display">
+                <span class="target-letter" id="mp-target-display">A</span>
+            </div>
+            <p class="instruction-text" id="mp-target-instruction">Right hand up, left hand to the side</p>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <button class="game-btn start-btn" onclick="startMultiplayerGame()">
+                Start Game
+            </button>
+            <button class="game-btn stop-btn" onclick="stopGame()">
+                Stop Game
+            </button>
+            <button class="game-btn skip-btn" onclick="skipTurn()">
+                Skip Turn
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- ====== HALAMAN HISTORY ====== -->
+        <div id="history-page" class="page">
+            <div class="page-content">
+                <!-- Header halaman -->
+                <div class="page-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-trophy"></i>
+                        LEADERBOARD
+                    </h2>
+                    <button class="back-btn" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Menu
+                    </button>
+                </div>
+                
+                <!-- Daftar game session -->
+                <div class="history-container">
+                    <div id="history-list" class="history-list">
+                        <!-- History akan ditampilkan secara dinamis -->
+                    </div>
+                </div>
+                
+                <!-- Tombol kontrol -->
+                <div class="history-controls">
+                    <button class="control-btn clear-btn" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i>
+                        Clear History
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== HALAMAN HASIL GAME ====== -->
+        <div id="result-page" class="page">
+            <div class="page-content">
+                <!-- Header hasil -->
+                <div class="result-header">
+                    <h2 class="page-title">
+                        <i class="fas fa-flag-checkered"></i>
+                        GAME RESULTS
+                    </h2>
+                </div>
+                
+                <!-- Podium untuk menampilkan ranking -->
+                <div class="podium-section">
+                    <div class="podium-container">
+                        <!-- Winner -->
+                        <div class="podium-place winner">
+                            <div class="podium-crown">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="podium-player">
+                                <span class="player-name" id="winner-name">Player 1</span>
+                                <span class="player-score" id="winner-score">100</span>
+                            </div>
+                            <div class="podium-base gold">
+                                <span class="position">1st</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Second place -->
+                        <div class="podium-place second">
+                            <div class="podium-crown">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="podium-player">
+                                <span class="player-name" id="second-name">Player 2</span>
+                                <span class="player-score" id="second-score">80</span>
+                            </div>
+                            <div class="podium-base silver">
+                                <span class="position">2nd</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hasil lengkap semua pemain -->
+                <div class="full-results-section">
+                    <h3>Complete Results</h3>
+                    <div id="full-results" class="results-grid">
+                        <!-- Hasil akan ditampilkan secara dinamis -->
+                    </div>
+                </div>
+                
+                <!-- Tombol kontrol -->
+                <div class="result-controls">
+                    <button class="control-btn play-again-btn" onclick="playAgain()">
+                        <i class="fas fa-redo"></i>
+                        Play Again
+                    </button>
+                    
+                    <button class="control-btn history-btn" onclick="showPage('history-page')">
+                        <i class="fas fa-trophy"></i>
+                        View History
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== MODAL UNTUK PETUNJUK HURUF ====== -->
+    <div id="instruction-modal" class="modal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Letter Guide</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Letter display -->
+                <div class="modal-letter-display">
+                    <span id="modal-letter" class="modal-letter">A</span>
+                </div>
+                
+                <!-- Placeholder untuk gambar semaphore -->
+                <div class="semaphore-preview">
+                    <div class="semaphore-placeholder">
+                        <i class="fas fa-flag"></i>
+                        <span>Semaphore Position</span>
+                        <span id="modal-letter-display" class="position-letter">A</span>
+                    </div>
+                </div>
+                
+                <!-- Instruksi tekstual -->
+                <div class="instruction-detail">
+                    <h4>Instructions:</h4>
+                    <p id="modal-instruction">Right hand up, left hand to the side</p>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn understand-btn" onclick="closeModal()">
+                    <i class="fas fa-check"></i>
+                    Got It!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== NOTIFICATION SYSTEM ====== -->
+    <!-- Container untuk menampilkan notifikasi -->
+    <div id="notification-container" class="notification-container">
+        <!-- Notifications akan ditambahkan secara dinamis -->
+    </div>
+
+    <!-- Link ke file JavaScript -->
+    <script src="scripts.js"></script>
+</body>
+</html>
