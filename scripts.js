@@ -362,16 +362,15 @@ const response = await fetch("https://jo2254-gabut.hf.space/", {
     const result = await response.json();
     console.log("🤖 AI Detection result:", result);
 
-    // Validate result
-    if (
-      result.detected_letter &&
-      result.confidence >= CONFIG.CONFIDENCE_THRESHOLD
-    ) {
-      return {
-        letter: result.detected_letter.toUpperCase(),
-        confidence: result.confidence,
-      };
-    }
+    // Validate resultif (
+  result.prediction &&
+  result.confidence >= CONFIG.CONFIDENCE_THRESHOLD
+) {
+  return {
+    letter: result.prediction.toUpperCase(),
+    confidence: result.confidence,
+  };
+}
 
     return null;
   } catch (error) {
@@ -1475,6 +1474,7 @@ if (typeof window !== "undefined") {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("✅ All systems ready. Game initialized successfully!");
 });
+
 
 
 
