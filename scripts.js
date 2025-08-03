@@ -346,19 +346,19 @@ async function detectSemaphore() {
         const imageData = canvas.toDataURL("image/jpeg", 0.8);
 
         // Send ke Flask backend
-        const response = await fetch(CONFIG.API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                image: imageData,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+// Send ke Flask backend
+const response = await fetch(CONFIG.API_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    image: imageData,
+  }),
+});
+if (!response.ok) {
+  throw new Error(`HTTP error! status: ${response.status}`);
+}
 
         const result = await response.json();
         console.log("🤖 AI Detection result:", result);
@@ -1475,3 +1475,4 @@ if (typeof window !== "undefined") {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ All systems ready. Game initialized successfully!");
 });
+
