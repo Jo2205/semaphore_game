@@ -1203,7 +1203,7 @@ window.addEventListener('unhandledrejection', function(e) {
 
 async function testAPIConnection() {
     try {
-const response = await fetch('https://jo2254-gabut.hf.space/predict', {
+    const response = await fetch('https://jo2254-gabut.hf.space/predict', {
     method: 'GET'
 });
 
@@ -1391,6 +1391,7 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
 
