@@ -1,7 +1,7 @@
 // ====== GLOBAL VARIABLES & CONFIGURATION ======
 // Game configuration constants
 const CONFIG = {
-    API_URL: "https://jo2254-gabut.hf.space/", // Flask backend endpoint
+    API_URL: "https://jo2254-gabut.hf.space/", // Flask backend endpocint
     CONFIDENCE_THRESHOLD: 0.85, // Minimum confidence untuk detection
     DETECTION_INTERVAL: 1000, // Interval detection dalam ms (1 detik)
     SINGLE_GAME_TIME: 60, // Waktu single player dalam detik
@@ -347,7 +347,7 @@ async function detectSemaphore() {
 
         // Send ke Flask backend
 // Send ke Flask backend
-const response = await fetch(CONFIG.API_URL, {
+const response = await fetch("https://jo2254-gabut.hf.space/"), {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1475,4 +1475,5 @@ if (typeof window !== "undefined") {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ All systems ready. Game initialized successfully!");
 });
+
 
