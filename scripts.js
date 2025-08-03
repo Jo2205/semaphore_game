@@ -365,7 +365,7 @@ const response = await fetch("https://jo2254-gabut.hf.space/", {
     // Validate resultif (
   result.prediction &&
   result.confidence >= CONFIG.CONFIDENCE_THRESHOLD
-) {
+    ) {
   return {
     letter: result.prediction.toUpperCase(),
     confidence: result.confidence,
@@ -1474,6 +1474,7 @@ if (typeof window !== "undefined") {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("✅ All systems ready. Game initialized successfully!");
 });
+
 
 
 
