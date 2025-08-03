@@ -2,13 +2,13 @@
 // ====== GLOBAL VARIABLES & CONFIGURATION ======
 // Game configuration constants
 const CONFIG = {
-    API_URL: 'API_URL: 'https://jo2254-gabut.hf.space/predict', // Flask backend endpoint
-    CONFIDENCE_THRESHOLD: 0.85, // Minimum confidence untuk detection
-    DETECTION_INTERVAL: 1000, // Interval detection dalam ms (1 detik)
-    SINGLE_GAME_TIME: 60, // Waktu single player dalam detik
-    MULTIPLAYER_TIME: 60, // Waktu per pemain dalam multiplayer
-    SCORE_PER_CORRECT: 10, // Poin per jawaban benar
-    LOADING_TIME: 3000 // Waktu loading screen dalam ms
+    API_URL: 'https://jo2254-gabut.hf.space/predict',
+    CONFIDENCE_THRESHOLD: 0.85,
+    DETECTION_INTERVAL: 1000,
+    SINGLE_GAME_TIME: 60,
+    MULTIPLAYER_TIME: 60,
+    SCORE_PER_CORRECT: 10,
+    LOADING_TIME: 3000
 };
 
 // Semaphore letters mapping (A-Z dengan instruksi)
@@ -1390,6 +1390,7 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
 
