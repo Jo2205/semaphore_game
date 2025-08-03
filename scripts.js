@@ -2,7 +2,7 @@
 // ====== GLOBAL VARIABLES & CONFIGURATION ======
 // Game configuration constants
 const CONFIG = {
-    API_URL: 'https://jo2254-gabut.hf.space/predict',
+    API_URL: 'https://huggingface.co/spaces/Jo2254/gabut',
     CONFIDENCE_THRESHOLD: 0.85,
     DETECTION_INTERVAL: 1000,
     SINGLE_GAME_TIME: 60,
@@ -1391,6 +1391,7 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
 
