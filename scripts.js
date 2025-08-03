@@ -1207,14 +1207,8 @@ async function testAPIConnection() {
             method: 'GET'
         });
 
-        const result = await response.text();
-        console.log('✅ Response:', result);
-    } catch (err) {
-        console.error('❌ Error:', err);
-    }
-}
+        console.log('🔗 API connection test:', response.status);
 
-        
         if (response.ok) {
             showNotification('AI detection service connected', 'success');
             return true;
@@ -1222,13 +1216,14 @@ async function testAPIConnection() {
             showNotification('AI detection service unavailable', 'error');
             return false;
         }
-        
-    } catch (error) {
-        console.error('🔗 API connection failed:', error);
-        showNotification('Cannot connect to AI service. Please check if Flask server is running.', 'error');
+
+    } catch (e) {
+        console.error('❌ Error:', e);
+        showNotification('Connection error. Please check your internet.', 'error');
         return false;
     }
 }
+
 
 // Test API connection saat game initialize
 setTimeout(() => {
@@ -1396,6 +1391,7 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
 
