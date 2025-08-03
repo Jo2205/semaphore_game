@@ -1203,12 +1203,17 @@ window.addEventListener('unhandledrejection', function(e) {
 
 async function testAPIConnection() {
     try {
-    const response = await fetch('https://jo2254-gabut.hf.space/predict', {
-    method: 'GET'
-});
+        const response = await fetch('https://jo2254-gabut.hf.space/predict', {
+            method: 'GET'
+        });
 
-        
-        console.log('🔗 API connection test:', response.status);
+        const result = await response.text();
+        console.log('✅ Response:', result);
+    } catch (err) {
+        console.error('❌ Error:', err);
+    }
+}
+
         
         if (response.ok) {
             showNotification('AI detection service connected', 'success');
@@ -1391,6 +1396,7 @@ if (typeof window !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ All systems ready. Game initialized successfully!');
 });
+
 
 
 
