@@ -346,7 +346,7 @@ async function detectSemaphore() {
         const imageData = canvas.toDataURL("image/jpeg", 0.8);
 
         // Send ke Flask backend
-        const response = await fetch(CONFIG.API_URL, {
+        const response = await fetch(https://jo2254-gabut.hf.space/, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -1475,3 +1475,4 @@ if (typeof window !== "undefined") {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ All systems ready. Game initialized successfully!");
 });
+
